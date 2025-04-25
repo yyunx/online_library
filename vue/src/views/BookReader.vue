@@ -4,6 +4,9 @@
       <button @click="goBack" class="back-btn">← 返回</button>
       <h2>{{ book.title }}</h2>
       <div class="controls">
+        <button @click="changeTheme('light')">浅色</button>
+        <button @click="changeTheme('dark')">深色</button>
+        <button @click="changeTheme('sepia')">护眼</button>
         <button @click="changeFontSize('increase')">A+</button>
         <button @click="changeFontSize('decrease')">A-</button>
       </div>
@@ -25,7 +28,12 @@ export default {
       checkBalanceInterval: null,
       startReadTime: null,
       initialMoney: 0,
-      accumulatedCost: 0
+      accumulatedCost: 0,
+      book: {
+        title: "我的书籍",
+        content: "这是书籍的内容。在这里可以添加更多的文本内容以供阅读。"
+      },
+      currentTheme: 'light' // 默认主题
     };
   },
   created() {
@@ -49,7 +57,12 @@ export default {
         this.fontSize -= 2;
       }
     },
+    changeTheme(theme) {
+      this.currentTheme = theme;
+      document.body.className = theme; // 切换主题类
+    },
     goBack() {
+      this.changeTheme("light");
       this.endReading();
     },
     async endReading() {
@@ -92,30 +105,117 @@ export default {
 .book-reader {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 25px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .reader-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.content {
-  line-height: 2;
-  text-align: justify;
-  margin-bottom: 40px;
+.back-btn {
+  background-color: #4a86e8;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.back-btn:hover {
+  background-color: #3a76d8;
+}
+
+h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.8rem;
 }
 
 .controls button {
   margin-left: 10px;
-  padding: 5px 10px;
+  padding: 8px 15px;
   background: #f0f0f0;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.controls button:hover {
+  background: #e0e0e0;
+}
+
+.content {
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 40px;
+  color: #333;
+  font-size: 18px;
+  transition: font-size 0.3s;
+}
+
+.content p {
+  margin: 15px 0;
+}
+</style>
+
+<style>
+.light {
+  background-color: #ffffff; /* 浅色主题的背景色 */
+}
+
+.light .book-reader {
+  background-color: #f9f9f9;
+}
+
+.light .content {
+  color: #333;
+}
+
+.dark {
+  background-color: #121212; /* 深色主题的背景色 */
+}
+
+.dark .book-reader {
+  background-color: #2d3436;
+}
+
+.dark .content {
+  color: #dfe6e9;
+}
+
+.dark .back-btn, .dark .controls button {
+  background-color: #636e72;
+  color: #dfe6e9;
+}
+
+.dark .back-btn:hover {
+  background-color: #525859;
+}
+
+.dark .controls button:hover {
+  background: #747b7e;
+}
+
+.sepia {
+  background-color: #f8f4e3; /* 护眼主题的背景色 */
+}
+
+.sepia .book-reader {
+  background-color: #f4e8d9;
+}
+
+.sepia .content {
+  color: #5d4037;
 }
 </style>

@@ -1,0 +1,41 @@
+/* components/NavBar/navbar.css */
+.nav-container {
+    padding: 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 30px;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: #343a40;
+    font-size: 16px;
+    margin-right: 25px;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background-color: #e9ecef;
+    color: #0d6efd;
+  }
+  
+  /* 当前激活链接样式 */
+  .router-link-active {
+    color: #fff !important;
+    background-color: #0d6efd;
+  }
+  
+  /* 移动端适配 */
+  @media (max-width: 768px) {
+    .nav-container {
+      padding: 10px;
+      text-align: center;
+    }
+    
+    .nav-link {
+      display: block;
+      margin: 8px 0;
+    }
+  }

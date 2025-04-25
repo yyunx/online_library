@@ -1,0 +1,116 @@
+/* 基本样式 */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  background-color: #c1e5ea;
+}
+
+/* 顶部导航栏样式 */
+.navbar {
+  background-color: #b380d3;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 25px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-title {
+  font-size: 18px;
+  text-decoration: none;
+  color: hwb(30 5% 95%);
+}
+
+.nav-buttons button {
+  margin: 0 5px;
+  padding: 8px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #555;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+
+.nav-buttons button:hover {
+  background-color: #777;
+}
+
+/* 表单容器样式 */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 水平居中 */
+  justify-content: center; /* 垂直居中 */
+  width: 500px;
+  margin: 0 auto; /* 水平居中 */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  padding: 10px;
+  width: 100%; /* 宽度占满容器 */
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #7eb9bf;
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.form-title h2 {
+  margin: 0; /* 去掉默认的外边距 */
+  font-size: 20px;
+}
+
+/* 表单组样式 */
+.form-group {
+  width: 100%; /* 宽度占满容器 */
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  text-align: center; /* 标签文字居中 */
+}
+
+.form-group input {
+  width: 500px; /* 宽度占满容器 */
+  padding: 10px;
+  border: 1px solid #e4b61d;
+  border-radius: 4px;
+}
+
+/* 按钮样式 */
+button[type="submit"],
+button[type="button"] {
+  padding: 10px;
+  width: 100%; /* 宽度占满容器 */
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #7eb9bf;
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 15px; /* 按钮之间有间隔 */
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+  background-color: #0056b3;
+}

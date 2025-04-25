@@ -1,0 +1,41 @@
+
+/* 顶部导航栏样式 */
+.navbar_ {
+  background-color: #b380d3;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 25px;
+}
+
+.nav-container_ {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-title_ {
+  font-size: 18px;
+  text-decoration: none;
+  color: hwb(30 5% 95%);
+}
+
+.nav-buttons_ button {
+  margin: 0 5px;
+  padding: 8px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #555;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+
+.nav-buttons_ button:hover {
+  background-color: #777;
+}
+
+

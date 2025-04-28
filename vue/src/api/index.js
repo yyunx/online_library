@@ -17,8 +17,8 @@ const apiClient = axios.create({
 });
 
 
-export const fetchBooksAPI = () => {
-  return apiClient.post('/book/getNum', {}, { timeout: 15000 }).then(response => {
+export const fetchBooksAPI = (data) => {
+  return apiClient.post('/book/getNumRelated', {"user_id":data}, { timeout: 15000 }).then(response => {
     console.log("获取书籍信息：");
     console.log(response.data);
     

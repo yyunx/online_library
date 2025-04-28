@@ -10,7 +10,6 @@ import {
   registerAPI, 
   depositAPI,
   fetchReadRecordsAPI,
-  // fetchRankingBooksAPI,
   fetchUserAPI,
   fetchRankingAPI,
   incrementReadVolumnAPI
@@ -21,7 +20,7 @@ export default createStore({
   //state 是 Vuex 的核心，用于存储应用的全局状态。
   //“全局变量”
   state: {
-    user: null,
+    user:null,
     users: [
       {
         user_id:0,
@@ -40,6 +39,7 @@ export default createStore({
         description:"123123123123123123132123",
         content: "JavaScript高级程序设计是一本全面深入的JavaScript指南，涵盖了ES6+的新特性。",
         read_volumn: 0
+      
       },
       {
         id: 2,
@@ -150,16 +150,18 @@ export default createStore({
   //actions 用于处理异步逻辑（如 API 请求）。
   //通过调用 mutations 来更新 state。
   //============后端数据 -- 后端程序 -- api -- action -- mutation -- state ==============
-  //相当于：前端数据与后端数据的接口   
+  //相当于：前端数据与后端数据的接口
   actions: {
     // a. 获取所有书籍
     //调用 API 获取书籍列表，并通过 SET_BOOKS 更新状态
-    async fetchBooks({ commit }) {
+    async fetchBooks({ commit,state }) {
       console.log("获取图书");
       commit('SET_LOADING', true);
       try {
-        const books = await fetchBooksAPI();
-        commit('SET_BOOKS', books); 
+        const user_i = state.user ? state.user.user_id : 0;
+        console.log(user_i);
+        const books = await fetchBooksAPI(user_i);
+        commit('SET_BOOKS', books);
       } catch (error) {
         console.error('Failed to fetch books:', error);
       } finally {
@@ -212,7 +214,6 @@ export default createStore({
         commit('SET_LOADING', false);
       }
     },
-
 
     // 增加阅读量（也是在开始阅读前）
     async incrementReadVolumn({ commit }, bookTitle) {
@@ -291,9 +292,11 @@ export default createStore({
           if (response.success) {
               // 登录成功
               commit('SET_USER', response.user);
-              // console.log(response.user)
               // console.log("登录后的user：")
-              // console.log(this.user)
+              console.log("fuck"+this.state.user.user_id)
+              
+              const books = await fetchBooksAPI(this.state.user.user_id);
+              console.log("books:"+books);
               return response.user;
           } else {
               // 登录失败
@@ -429,10 +432,12 @@ export default createStore({
       const start = (state.currentPage - 1) * state.pageSize;
       return getters.filteredBooks.slice(start, start + state.pageSize);
     },
-    isAuthenticated: state => !!state.user,
+    // isAuthenticated: state =>  !state.user === null,
+    // accountBalance: state => state.user?.money || 0,
+    // isLoggedIn: state =>  !state.user === null,
+    isAuthenticated: state => state.user !== null,
     accountBalance: state => state.user?.money || 0,
-    isLoggedIn: state => !!state.user,
+    isLoggedIn: state => state.user !== null,
     currentUser: state => state.user
-
   }
 });

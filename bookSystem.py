@@ -231,11 +231,60 @@ def getNum():
     db = pymysql.connect(host='localhost', user='root', password='yunx', port=3306, db='online_library')
     cursor=db.cursor()
     
-    res=cursor.execute("select * from book limit 20 ;")
+    res=cursor.execute("select * from book ;")
     db.commit()
     res=cursor.fetchall()
 
     return jsonify(res);
+
+"""book表相关"""
+#读取20本书的数据(用户记录相关)
+# null
+@app.route("/book/getNumRelated", methods=["POST"])
+def getNumRelated():
+    res = False
+    print("正在访问读取图书接口")
+
+    db = pymysql.connect(host='localhost', user='root', password='yunx', port=3306, db='online_library')
+    cursor = db.cursor()
+
+    # 假设用户 ID 从请求中获取
+    user_id=str(request.form.get("user_id"))
+    print(user_id)
+
+    if user_id:
+        # 查询用户读过的书的 ID
+        cursor.execute("SELECT book_id FROM record WHERE user_id = %s", (user_id,))
+        read_books = cursor.fetchall()
+        read_book_ids = [book[0] for book in read_books]
+        
+        # 构建查询字符串
+        # 如果用户读过书，将这些书排在前面
+        if len(read_book_ids)!=0:
+            # 使用字符串格式化来构建 IN 子句
+            in_clause = ', '.join(['%s'] * len(read_book_ids))
+            query = f"""
+                SELECT * FROM book
+                WHERE id IN ({in_clause})
+                UNION
+                SELECT * FROM book
+                WHERE id NOT IN ({in_clause})
+                LIMIT 20
+            """
+            cursor.execute(query, read_book_ids + read_book_ids)
+        else:
+            print("用户没看过书");
+            # 如果用户没有读过任何书，直接查询所有书
+            cursor.execute("SELECT * FROM book ")
+    else:
+        # 如果没有提供用户 ID，直接查询所有书
+        cursor.execute("SELECT * FROM book ")
+
+    res = cursor.fetchall()
+    db.commit()
+    db.close()
+
+    return jsonify(res)
 
 #条件查询书籍
 # category bookName
@@ -291,6 +340,8 @@ def ranking():
         finally:
             db.close()
     return jsonify(res)
+
+
 
 
 #书籍读取量改变

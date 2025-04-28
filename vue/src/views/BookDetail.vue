@@ -5,7 +5,8 @@
     </div>
 
     <div class="book-header">
-      <img :src="book.cover || defaultCover" class="detail-cover">
+      <!-- <img :src="book.cover || defaultCover" class="detail-cover"> -->
+      <img :src="getBookCover(book.title)" :alt="book.title">
       <div class="book-meta">
         <h1>{{ book.title }}</h1>
         <p class="author">{{ book.author }}</p>
@@ -76,6 +77,23 @@ export default {
       this.$store.dispatch('startReading', { book_id: this.book.id, user_id: this.user.user_id });
       this.$store.dispatch('incrementReadVolumn', this.book.title);
       this.$router.push(`/book/${this.book.id}/read/1`);
+    },
+    getBookCover(title) {     //将require改为了直接拼接路径
+      // 默认图片路径
+      const defaultCover = '/picture/default.jpg';
+      // 尝试获取书籍封面图片
+      const imgPath = `/picture/${title}.jpg`;
+      // 检查图片是否存在
+      try {
+        // 这里使用动态导入检查图片是否存在
+        // 但是这种方式可能不适用于所有环境
+        if (imgPath) {
+          return imgPath;
+        }
+      } catch (error) {
+        console.error('图片不存在:', imgPath, error);
+      }
+      return defaultCover;
     }
   },
   created() {
